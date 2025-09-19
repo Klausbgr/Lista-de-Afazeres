@@ -1,0 +1,30 @@
+//
+//  ToDoListViewViewModel.swift
+//  todolist
+//
+//  Created by  Klaus Boger on 08/04/25.
+//
+import FirebaseFirestore
+import Foundation
+
+class ToDoListViewViewModel: ObservableObject {
+    @Published var showingNewItemView = false
+    
+    private let userId: String
+    
+    init (userid: String) {
+        self.userId = userid
+    }
+    
+    /// - Parameter id: item id to delete
+
+     func delete(id: String) {
+        let db = Firestore.firestore()
+        
+        db.collection("users")
+            .document(userId)
+            .collection("todos")
+            .document(id)
+            .delete()
+    }
+}
